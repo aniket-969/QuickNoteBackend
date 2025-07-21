@@ -15,14 +15,13 @@ import { verifyJWT } from "../middleware/auth.middleware.js";
 
 const router = Router();
 
-router.route("/register").post(validate(registerSchema), registerUser);
-router.route("/login").post(validate(loginSchema), loginUser);
-router.route("/session").get(verifyJWT,fetchSession);
-router.route("/logout").post(verifyJWT, logoutUser);
-router
-  .route("/me/token")
-  .patch(verifyJWT,updateFcmToken);
-router.route("/refreshTokens").post(refreshTokens);
+router.post("/register", validate(registerSchema), registerUser);
+router.post("/login",    validate(loginSchema),    loginUser);
+router.post("/refresh-token", refreshTokens);
+
+// Protected
+router.get( "/me",         verifyJWT, fetchSession);
+router.post("/logout",     verifyJWT, logoutUser);
 
 export default router;
  
