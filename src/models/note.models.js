@@ -27,4 +27,16 @@ const noteSchema = new Schema(
   }
 );
 
+//Support “recent first” sorting
+noteSchema.index({ user: 1, updatedAt: -1 });
+
+// Allow fast filtering by tag for a given user
+noteSchema.index({ user: 1, tags: 1 });
+
+// for text searches over title & content for search bar:
+noteSchema.index({ title: "text", content: "text" });
+
+
+
+
 export const Note = mongoose.model("Note", noteSchema);
