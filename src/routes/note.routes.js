@@ -22,7 +22,7 @@ router
 router
   .route('/:id')
   .get(getNote)
-  .put(validate(updateNoteSchema), updateNote)
+  .patch(validate(updateNoteSchema), updateNote)
   .delete(deleteNote);
 
 export default router;
