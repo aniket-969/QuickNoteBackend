@@ -106,11 +106,13 @@ const refreshTokens = asyncHandler(async (req, res) => {
 
 
 const fetchSession = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id)
-    .select("-password -refreshToken");
+  const user = await User.findById(req.user?._id).select("-password -refreshToken")
+  console.log(user);
   if (!user) throw new ApiError(401, "Session not found");
 
-  res.json(new ApiResponse(200, user, "Session retrieved"));
+ return res
+    .status(200)
+    .json(new ApiResponse(200, user, "Session retrieved successfully"));
 });
 
 export {

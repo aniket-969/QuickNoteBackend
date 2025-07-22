@@ -20,7 +20,7 @@ router.post("/login",    validate(loginSchema),    loginUser);
 router.post("/refresh-token", refreshTokens);
 
 // Protected
-router.get( "/me",         verifyJWT, fetchSession);
+router.get( "/session",verifyJWT, fetchSession);
 router.post("/logout",     verifyJWT, logoutUser);
 
 export default router;

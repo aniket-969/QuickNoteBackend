@@ -22,7 +22,7 @@ app.use(cookieParser());
 import userRouter from "./routes/user.routes.js";
 import noteRouter from "./routes/note.routes.js";
 
-app.use("/api/v1/users", userRouter);
+app.use("/api/v1/auth", userRouter);
 app.use("/api/v1/note", noteRouter);
 
 export { app};
