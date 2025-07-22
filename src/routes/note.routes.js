@@ -6,7 +6,8 @@ import {
   getNote,
   createNote,
   updateNote,
-  deleteNote
+  deleteNote,
+  listTags,
 } from "../controller/note.controller.js";
 import { verifyJWT } from "../middleware/auth.middleware.js";
 
@@ -14,15 +15,15 @@ const router = Router();
 
 router.use(verifyJWT);
 
-router
-  .route('/')
-  .get(listNotes)
-  .post(validate(createNoteSchema), createNote);
+router.get("/tags", listTags);
+
+router.route("/").get(listNotes).post(validate(createNoteSchema), createNote);
 
 router
-  .route('/:id')
+  .route("/:id")
   .get(getNote)
   .patch(validate(updateNoteSchema), updateNote)
   .delete(deleteNote);
+
 
 export default router;

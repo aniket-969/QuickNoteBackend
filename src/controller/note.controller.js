@@ -66,3 +66,17 @@ export const deleteNote = asyncHandler(async (req, res) => {
   if (result.deletedCount === 0) throw new ApiError(404, "Note not found");
   res.json(new ApiResponse(200, {}, "Note deleted"));
 });
+
+export const listTags = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+
+  const tagsAgg = await Note.aggregate([
+    { $match: { user: userId } },       
+    { $unwind: "$tags" },           
+    { $group: { _id: "$tags" } },         
+    { $sort: { _id: 1 } },              
+  ]);
+  const tags = tagsAgg.map((t) => t._id);
+
+  res.json(new ApiResponse(200, tags));
+});
