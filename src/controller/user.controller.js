@@ -57,7 +57,7 @@ const loginUser = asyncHandler(async (req, res) => {
   const payload = await User.findById(user._id)
     .select("name email");
 
-  const cookieOpts = { httpOnly: true, secure: true, sameSite: "lax" };
+  const cookieOpts = { httpOnly: true, secure: true, sameSite: "none" };
   res
     .cookie("accessToken",  accessToken,  { ...cookieOpts, path: "/" })
     .cookie("refreshToken", refreshToken, { ...cookieOpts, path: "/auth/refresh" })
@@ -71,7 +71,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 
   await User.findByIdAndUpdate(userId, { refreshToken: null });
 
-  const cookieOpts = { httpOnly: true, secure: true, sameSite: "lax" };
+  const cookieOpts = { httpOnly: true, secure: true, sameSite: "none" };
   res
     .clearCookie("accessToken",  cookieOpts)
     .clearCookie("refreshToken", cookieOpts)
@@ -97,7 +97,7 @@ const refreshTokens = asyncHandler(async (req, res) => {
 
   const { accessToken, refreshToken } = await generateTokens(user._id);
 
-  const cookieOpts = { httpOnly: true, secure: true, sameSite: "lax" };
+  const cookieOpts = { httpOnly: true, secure: true, sameSite: "none" };
   res
     .cookie("accessToken",  accessToken,  { ...cookieOpts, path: "/" })
     .cookie("refreshToken", refreshToken, { ...cookieOpts, path: "/auth/refresh" })
